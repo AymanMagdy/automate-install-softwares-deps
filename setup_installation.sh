@@ -20,11 +20,11 @@ _log () {
 }
 
 _warn () {
-    printf >&2 "(WARNNING): $*"
+    printf >&2 "(WARNNING): $*\n"
 }
 
 _err () {
-    printf >&2 "(ERROR): $*"
+    printf >&2 "(ERROR): $*\n"
     exit 1
 }
 
@@ -44,15 +44,15 @@ install_java () {
 
         _installed_java=$(ls /home/$USER_NAME | grep ^jdk-[0-9]*.*.tar.gz$)
         sudo mkdir -p /opt/jdk; \ 
-        cp -rf /home/$USER_NAME/$_installed_java /opt/jdk; \
-        tar -zxf /opt/jdk/$_installed_java
+            cp -rf /home/$USER_NAME/$_installed_java /opt/jdk; \
+            tar -zxf /opt/jdk/$_installed_java
         _untared_jdk=$(ls | grep ^jdk-[0-9]*.[0-9].[0-9]$)
         sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100; \
-        update-alternatives --display java; \
-        update-alternatives --config java; \
-        bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
-        apt-get update; \ 
-        java -version
+            update-alternatives --display java; \
+            update-alternatives --config java; \
+            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
+            apt-get update; \ 
+            java -version
     else
         _warn "Java is already installed."
         _log "Check up" "Java" "Already installed."
@@ -69,6 +69,41 @@ install_jenkins () {
 install_docker () {
     local _docker_version=$1
     _log "Installing" "Docker" $_docker_version
+
+   _is_docker_installed=$(docker version)
+   if [ $? -ge 1 ]; then 
+         _log "Removing" "Docker" "If any deps installed."
+        apt-get remove docker docker-engine docker.io containerd runc
+        _log "Updating" "current system" 
+        apt-get update
+
+        _log "Install dependecies"
+        sudo apt-get install \
+            apt-transport-https \
+            ca-certificates \
+            curl \
+            gnupg-agent \
+            software-properties-common
+
+        _log "Adding" "Docker key"
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+        _log "Adding" "Docker repo"
+        sudo add-apt-repository \
+            "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+            $(lsb_release -cs) \
+            stable"
+
+        _log "Update" "System before installing"
+        sudo apt-get update
+
+        _log "Installing" "Docker engine"
+        sudo apt-get install docker-ce docker-ce-cli containerd.io
+    else 
+        _warn "Docker is already installed."
+        _log "Check up" "Java" "Already installed."
+        docker version
+   fi
 }
 
 install_vmware () {
@@ -80,4 +115,4 @@ setup_minikube_vmware () {
     _log "Setting up" "VMware" $_vmware_version
 }
 
-install_java
+install_docker
