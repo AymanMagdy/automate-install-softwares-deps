@@ -51,21 +51,47 @@ install_java () {
             update-alternatives --display java; \
             update-alternatives --config java; \
             bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
-            apt-get update; \ 
+            apt-get update -y; \ 
             java -version
     else
         _warn "Java is already installed."
         _log "Check up" "Java" "Already installed."
         java -version
     fi
-    
 }
 
 install_jenkins () {
     local _jenkins_version=$1
     _log "Installing" "Jenkins" $_jenkins_version
+
+    _is_java_installed=$(java -version)
+    if [ $? -ge 1]; then
+        _err "Java is not installed""Please install java."
+    else
+        _is_jenkins_installed=$(java -jar jenkins-cli.jar -s http://localhost:8080/ version)
+        if [ $? -ge 1]; then
+            _log "Adding The key and jenkins repo"
+            wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+            sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+            _log "Updating and installing jenkins"
+            sudo apt update -y \
+                 apt install jenkins -y
+            
+            _log "Starting the jenkins"
+            sudo systemctl start jenkins
+
+            _log "Jenkins status: "
+            sudo systemctl status jenkins
+        else   
+            _warn "Jenkins is already installed."
+            _log "Check up" "Jenkins" "Already installed."
+            java -jar jenkins-cli.jar -s http://localhost:8080/ version
+        fi 
+    fi 
 }
 
+# Installig docker (Container runtime engine.).
 install_docker () {
     local _docker_version=$1
     _log "Installing" "Docker" $_docker_version
@@ -115,4 +141,4 @@ setup_minikube_vmware () {
     _log "Setting up" "VMware" $_vmware_version
 }
 
-install_docker
+install_jenkins
