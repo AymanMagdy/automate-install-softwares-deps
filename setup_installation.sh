@@ -131,14 +131,3 @@ install_docker () {
         docker version
    fi
 }
-
-install_vmware () {
-    local _vmware_version=$1
-    _log "Installing" "VMware" $_vmware_version
-}
-
-setup_minikube_vmware () {
-    _log "Setting up" "VMware" $_vmware_version
-}
-
-install_jenkins
