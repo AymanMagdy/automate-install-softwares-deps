@@ -32,7 +32,7 @@ _err () {
 install_java () {
     local _java_version=$1
     _log "Installing" "Java" $_java_version
-    _is_binary_installed=$(ls /home/$USER_NAME | grep ^jdk-[0-9]*.*.tar.gz$)
+    _is_java_installed=$(java -version)
     if [ $? -ge 1 ]; then
         _log "Installing" "JDK" "11.0.1"
         printf "cd /home/$USER_NAME; \
@@ -51,7 +51,13 @@ install_java () {
                 update-alternatives --display java; \
                 update-alternatives --config java; \
                 bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
-                apt-get update;"
+                apt-get update; \ 
+                java -version"
+    else
+        _warn "Java is already installed."
+        _log "Check up" "Java" "Already installed."
+        printf "Java is already installed.\n 
+                java -version"
     fi
     
 }
