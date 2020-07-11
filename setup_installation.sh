@@ -37,15 +37,15 @@ install_java () {
     if [ $? -ge 1 ]; then
         _err "The jdk binary is not installed..\n""You can install it from here: https://www.oracle.com/java/technologies/javase-jdk11-downloads.html\n"
     fi
-    printf "sudo mkdir -p /opt/jdk \ 
-            cp -rf /home/$USER_NAME/$_is_binary_installed /opt/jdk \
-            sudo tar -zxf /opt/jdk/$_is_binary_installed "
+    printf "sudo mkdir -p /opt/jdk; \ 
+            cp -rf /home/$USER_NAME/$_is_binary_installed /opt/jdk; \
+            tar -zxf /opt/jdk/$_is_binary_installed"
     _untared_jdk=$(ls | grep ^jdk-[0-9]*.[0-9].[0-9]$)
-    printf "sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100 \
-            update-alternatives --display java \
-            update-alternatives --config java \
-            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment' \
-            apt-get update"
+    printf "sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100; \
+            update-alternatives --display java; \
+            update-alternatives --config java; \
+            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
+            apt-get update;"
 }
 
 install_jenkins () {
