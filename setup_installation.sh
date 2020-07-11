@@ -33,9 +33,11 @@ install_java () {
     local _java_version=$1
     _log "Installing" "Java" $_java_version
     printf "Please make sure Java binary is installed in Downloads folder..\n"
-    _is_binary_installed=$(ls /home/$USER_NAME/Downloads | grep ^jdk-[0-9]*.*.tar.gz$)
+    _is_binary_installed=$(ls /home/$USER_NAME | grep ^jdk-[0-9]*.*.tar.gz$)
     if [ $? -ge 1 ]; then
-        _err "The jdk binary is not installed..\n""You can install it from here: https://www.oracle.com/java/technologies/javase-jdk11-downloads.html\n"
+        _log "Installing" "JDK" "11.0.1"
+        printf "curl -L -C - -b "oraclelicense=accept-securebackup-cookie" \
+        -O http://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_linux-x64_bin.tar.gz"
     fi
     printf "sudo mkdir -p /opt/jdk; \ 
             cp -rf /home/$USER_NAME/$_is_binary_installed /opt/jdk; \
