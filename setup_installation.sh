@@ -20,21 +20,32 @@ _log () {
 }
 
 _warn () {
-    echo >&2 "(WARNNING): $*"
+    printf >&2 "(WARNNING): $*"
 }
 
 _err () {
-    echo >&2 "(ERROR): $*"
+    printf >&2 "(ERROR): $*"
     exit 1
 }
 
+# Install Java 11 with reference https://www.fosstechnix.com/install-oracle-java-11-on-ubuntu/
 install_java () {
     local _java_version=$1
     _log "Installing" "Java" $_java_version
-    printf "Please make sure Java binary is installed in Downloads folder.."
-    if [ -z $USER_NAME ]; then
-        _err "${FUNCNAME[0]}: Username is not provided.."
+    printf "Please make sure Java binary is installed in Downloads folder..\n"
+    _is_binary_installed=$(ls /home/$USER_NAME/Downloads | grep ^jdk-[0-9]*.*.tar.gz$)
+    if [ $? -ge 1 ]; then
+        _err "The jdk binary is not installed..\n""You can install it from here: https://www.oracle.com/java/technologies/javase-jdk11-downloads.html\n"
     fi
+    printf "sudo mkdir -p /opt/jdk \ 
+            cp -rf /home/$USER_NAME/$_is_binary_installed /opt/jdk \
+            sudo tar -zxf /opt/jdk/$_is_binary_installed "
+    _untared_jdk=$(ls | grep ^jdk-[0-9]*.[0-9].[0-9]$)
+    printf "sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100 \
+            update-alternatives --display java \
+            update-alternatives --config java \
+            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment' \
+            apt-get update"
 }
 
 install_jenkins () {
@@ -55,3 +66,5 @@ install_vmware () {
 setup_minikube_vmware () {
     _log "Setting up" "VMware" $_vmware_version
 }
+
+install_java
