@@ -35,19 +35,19 @@ install_java () {
     _is_java_installed=$(java -version)
     if [ $? -ge 1 ]; then
         _log "Installing" "JDK" "11.0.1"
-        printf "cd /home/$USER_NAME; \
-                curl -L -C - -b "oraclelicense=accept-securebackup-cookie" \
-                -O http://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_linux-x64_bin.tar.gz"
+        echo "cd /home/$USER_NAME; \
+              curl -L -C - -b "oraclelicense=accept-securebackup-cookie" \
+              -O http://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_linux-x64_bin.tar.gz"
 
         _log "Installed" "JDK" "11.0.1"
         _log "Configuring" "JAVA_HOME..."
 
         _installed_java=$(ls /home/$USER_NAME | grep ^jdk-[0-9]*.*.tar.gz$)
-        printf "sudo mkdir -p /opt/jdk; \ 
+        echo "sudo mkdir -p /opt/jdk; \ 
                 cp -rf /home/$USER_NAME/$_installed_java /opt/jdk; \
                 tar -zxf /opt/jdk/$_installed_java"
         _untared_jdk=$(ls | grep ^jdk-[0-9]*.[0-9].[0-9]$)
-        printf "sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100; \
+        echo "sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100; \
                 update-alternatives --display java; \
                 update-alternatives --config java; \
                 bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
@@ -56,7 +56,7 @@ install_java () {
     else
         _warn "Java is already installed."
         _log "Check up" "Java" "Already installed."
-        printf "Java is already installed.\n 
+        echo "Java is already installed.\n 
                 java -version"
     fi
     
