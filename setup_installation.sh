@@ -75,10 +75,10 @@ install_docker () {
          _log "Removing" "Docker" "If any deps installed."
         apt-get remove docker docker-engine docker.io containerd runc
         _log "Updating" "current system" 
-        apt-get update
+        apt-get update -y
 
         _log "Install dependecies"
-        sudo apt-get install \
+        sudo apt-get install -y \
             apt-transport-https \
             ca-certificates \
             curl \
@@ -95,13 +95,13 @@ install_docker () {
             stable"
 
         _log "Update" "System before installing"
-        sudo apt-get update
+        sudo apt-get update -y
 
         _log "Installing" "Docker engine"
-        sudo apt-get install docker-ce docker-ce-cli containerd.io
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io
     else 
         _warn "Docker is already installed."
-        _log "Check up" "Java" "Already installed."
+        _log "Check up" "Docker" "Already installed."
         docker version
    fi
 }
