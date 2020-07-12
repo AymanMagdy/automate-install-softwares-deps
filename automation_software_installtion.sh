@@ -164,6 +164,7 @@ install_kubectl () {
 }
 
 # Install python3.8
+# Refer here for the full installtion guidance : https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
 install_python () {
     local _python_version=$1
     _log "Check up" "Python version" $_python_version
@@ -180,5 +181,22 @@ install_python () {
     sudo apt install python3-pip
 }
 
-
-install_python "3.8.0"
+# Install Go
+# Refer here for the full installation guidance : https://medium.com/better-programming/install-go-1-11-on-ubuntu-18-04-16-04-lts-8c098c503c5f
+install_GO () {
+    local _GO_version=$1
+    _log "Check up" "GO version" $_GO_version
+    _log "Updating the system"
+    sudo apt-get update -y
+    cd /tmp
+    printf "Wget the source code..\n"
+    wget https://dl.google.com/go/go1.11.linux-amd64.tar.gz
+    sudo tar -xvf go1.11.linux-amd64.tar.gz
+    sudo mv go /usr/local
+    printf "Go to the .profile and add the following vars:\n"
+    printf "Make sure to remove the spaces between the $ and the var name: \n
+            export GOROOT=/usr/local/go \n
+            export GOPATH=$ HOME/go \n
+            export PATH=$ GOPATH/bin:$ GOROOT/bin:$ PATH \n
+            Fnally: source ~/.profile" 
+}
