@@ -176,6 +176,8 @@ install_python () {
     printf "Installing python3.8.."
     sudo apt install python3.8
     python3.8 --version
+    printf "Installing pip for python 3.8\n"
+    sudo apt install python3-pip
 }
 
 
