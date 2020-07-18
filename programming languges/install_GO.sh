@@ -16,7 +16,7 @@ install_GO () {
     go version >& /dev/null
     # Checking if Go installed on the machine.
     if [ $? -ge 1 ]; then
-        _log "Installing" "Java"
+        _log "Installing" "Go"
         _log "Updating" "local machine"
         sudo apt-get update -y
         _log "installing" "Go"
@@ -24,6 +24,7 @@ install_GO () {
         chmod 777 installer_linux
         ./installer_linux
         source /home/$USERNAME/.bash_profile
+        _log "installed" "Go"
         go version
     else
         _warn "Go is already installed.."
