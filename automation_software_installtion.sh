@@ -50,7 +50,7 @@ install_java () {
         sudo update-alternatives --install /usr/bin/java java /opt/jdk/$_untared_jdk/bin/java 100; \
             update-alternatives --display java; \
             update-alternatives --config java; \
-            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk> /etc/environment'; \
+            bash -c 'echo JAVA_HOME=/opt/jdk/$_untared_jdk >> /etc/environment'; \
             apt-get update -y; \ 
             java -version
     else
