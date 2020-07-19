@@ -12,8 +12,9 @@ install_GO () {
     _log "Sourced" "the needed files."
 
     go version >& /dev/null
-    # Checking if Go installed on the machine.
-    if [ $? -ge 1 ]; then
+    _is_go_installed=$?
+
+    if [ $_is_go_installed -ge 1 ]; then
         _log "installing" "Go"
         wget https://storage.googleapis.com/golang/getgo/installer_linux
         chmod 777 installer_linux
