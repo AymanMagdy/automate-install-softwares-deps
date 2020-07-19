@@ -65,8 +65,12 @@ install_jenkins () {
     local _jenkins_version=$1
     _log "Installing" "Jenkins" $_jenkins_version
 
-    _is_java_installed=$(java -version)
-    if [ $? -ge 1]; then
+    java --version
+    _is_java_installed=$?
+
+    head -5  /var/lib/jenkins/config.xml| grep -oP '(?<=<version>).*?(?=</version>)'
+    _is_jenkins_installed=$?
+    if [ $_is_java_installed -eq 0 -a $_is_jenkins_installed -eq 0 ]; then
         _err "Java is not installed""Please install java."
     else
         _log "Adding The key and jenkins repo"
@@ -87,32 +91,31 @@ install_jenkins () {
 
 # Installig docker (Container runtime engine.).
 install_docker () {
-    local _docker_version=$1
     _log "Installing" "Docker" $_docker_version
 
-   _is_docker_installed=$(docker version)
+   docker --version
    if [ $? -ge 1 ]; then 
-         _log "Removing" "Docker" "If any deps installed."
+        _log "Removing" "Docker" "If any deps installed."
         apt-get remove docker docker-engine docker.io containerd runc
         _log "Updating" "current system" 
         apt-get update -y
 
         _log "Install dependecies"
         sudo apt-get install -y \
-            apt-transport-https \
-            ca-certificates \
-            curl \
-            gnupg-agent \
-            software-properties-common
+             apt-transport-https \
+             ca-certificates \
+             curl \
+             gnupg-agent \
+             software-properties-common
 
         _log "Adding" "Docker key"
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
         _log "Adding" "Docker repo"
         sudo add-apt-repository \
-            "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-            $(lsb_release -cs) \
-            stable"
+             "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+             $(lsb_release -cs) \
+             stable"
 
         _log "Update" "System before installing"
         sudo apt-get update -y
@@ -154,12 +157,9 @@ install_minikube () {
 
 # install kubectl
 install_kubectl () {
-    local _kubectl_version=$1
-    _log "Installing" "kubectl" $_kubectl_version
+    _log "Installing" "kubectl"
     curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
     sudo chmod +x ./kubectl
-
-    # To ensure the user the kubectl is installed
     kubectl version -o json
 }
 
