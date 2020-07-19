@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure virtualbox.
-    Install virtualbox latest version with reference https://phoenixnap.com/kb/install-virtualbox-on-ubuntu
-'
+#     This file is to install and configure virtualbox.
+#     Install virtualbox latest version with reference https://phoenixnap.com/kb/install-virtualbox-on-ubuntu
 
 install_virualBox () {
     source ./../sys\ out/error.sh

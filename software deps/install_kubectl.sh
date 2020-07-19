@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure kubectl.
-    Install kubectl latest version with reference https://kubernetes.io/docs/tasks/tools/install-kubectl/
-'
+#     This file is to install and configure kubectl.
+#     Install kubectl latest version with reference https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
 install_kubectl () {
     source ./../sys\ out/error.sh

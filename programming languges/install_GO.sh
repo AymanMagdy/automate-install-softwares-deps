@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure Golang the latest version.
-    Install go latest version with reference https://medium.com/better-programming/install-go-1-11-on-ubuntu-18-04-16-04-lts-8c098c503c5f.
-'
+#     This file is to install and configure Golang the latest version.
+#     Install go latest version with reference https://medium.com/better-programming/install-go-1-11-on-ubuntu-18-04-16-04-lts-8c098c503c5f.
 
 install_GO () {
     source ./../sys\ out/error.sh

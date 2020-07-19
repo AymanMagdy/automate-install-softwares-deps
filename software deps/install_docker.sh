@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure docker.
-    Install docker latest version with reference  https://runnable.com/docker/install-docker-on-linux
-'
+#     This file is to install and configure docker.
+#     Install docker latest version with reference  https://runnable.com/docker/install-docker-on-linux
 
 install_docker () {
     source ./../sys\ out/error.sh

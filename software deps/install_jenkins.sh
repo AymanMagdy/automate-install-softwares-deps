@@ -1,11 +1,8 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure jenkins.
-    Install jenkins latest version with reference https://www.jenkins.io/doc/book/installing/
-'
+#     This file is to install and configure jenkins.
+#     Install jenkins latest version with reference https://www.jenkins.io/doc/book/installing/
 
-# Installing jenkins
 install_jenkins () {
     source ./../sys\ out/error.sh
     source ./../sys\ out/logs.sh

@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure Java 11.0.1
-    Install Python3 with reference https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
-'
+#     This file is to install and configure Java 11.0.1
+#     Install Python3 with reference https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
 
 install_python () {
     source ./../sys\ out/error.sh

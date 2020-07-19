@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure minikube the latest version.
-    Install minikube latest version with reference https://phoenixnap.com/kb/install-minikube-on-ubuntu
-'
+#     This file is to install and configure minikube the latest version.
+#     Install minikube latest version with reference https://phoenixnap.com/kb/install-minikube-on-ubuntu
 
 install_minikube () {
     source ./../sys\ out/error.sh
@@ -13,7 +11,7 @@ install_minikube () {
 
     minikube version >& /dev/null
     _is_minikube_installed=$?
-    
+
     if [ $_is_minikube_installed -ge 1 ]; then
         _log "Installing" "kubectl"
         cd $USERNAME

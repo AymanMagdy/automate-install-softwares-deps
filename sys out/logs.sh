@@ -1,8 +1,6 @@
 #!/bin/bash
 
-:'
-    This file is to print the logs to the user.
-'
+ #   This file is to print the logs to the user.
 
 _log () {
     local _operation_type=$1

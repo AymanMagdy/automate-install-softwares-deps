@@ -1,9 +1,7 @@
 #!/bin/bash
 
-:'
-    This file is to install and configure Java 11.0.1
-    Install Java 11 with reference https://www.fosstechnix.com/install-oracle-java-11-on-ubuntu/
-'
+#     This file is to install and configure Java 11.0.1
+#     Install Java 11 with reference https://www.fosstechnix.com/install-oracle-java-11-on-ubuntu/
 
 install_java () {
     source ./../sys\ out/error.sh
