@@ -35,10 +35,12 @@ install_java () {
              apt-get update -y; \ 
              _log "Installed Java.."
              java --version
+             exit 0
     else
         _warn "Java is already installed.."
         _log "Check up" "Java" "Already installed."
         java --version
+        exit 1
     fi
 }
 

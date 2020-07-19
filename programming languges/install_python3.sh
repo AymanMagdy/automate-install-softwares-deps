@@ -14,21 +14,20 @@ install_python () {
     python3 --version >& /dev/null
     # Checking if python installed on the machine.
     if [ $? -ge 1 ]; then
-        _log "Installing" "Go"
-        _log "Updating" "local machine"
-        sudo apt update
         _log "Installing" "deps"
-        sudo apt install software-properties-common
+        sudo apt install software-properties-common -y
         _log "Adding" "key to the local machine"
         echo -ne '\n' | sudo add-apt-repository ppa:deadsnakes/ppa
         _log "Installing" "Python" "3.8"
-        sudo apt install python3.8
+        sudo apt install python3.8 -y
         python3.8 --version
         _log "Installing" "pip"
-        sudo apt install python3-pip 
+        sudo apt install python3-pip -y
+        exit 0
     else
         _warn "Python is already installed.."
         _log "Check up" "Python3" "Already installed."
         python3 --version
+        exit 1
     fi
 }

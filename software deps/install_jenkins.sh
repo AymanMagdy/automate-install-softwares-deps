@@ -2,7 +2,7 @@
 
 :'
     This file is to install and configure jenkins.
-    Install jenkins latest version with reference 
+    Install jenkins latest version with reference https://www.jenkins.io/doc/book/installing/
 '
 
 # Installing jenkins
@@ -23,18 +23,26 @@ install_jenkins () {
         wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
         sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 
-        _log "Updating" "jenkins"
-        apt update;
+        _log "Updating" "local machine"
+        apt update -y;
         
         _log "Installing" "jenkins"
         apt install jenkins -y
         
         _log "Starting" "jenkins"
-        systemctl start jenkins
+        sudo systemctl start jenkins
 
         _log "Jenkins" "status"
-        systemctl status jenkins
+        sudo systemctl status jenkins
+        exit 0
     elif ! [ $_is_java_installed -eq 0 ]
         _log "Java is not installed"
-    fi 
+    else
+        _warn "jenkins is already installed.."
+        _log "Check up" "jenkins" "Already installed."
+        echo "Version:" 
+        head -5  /var/lib/jenkins/config.xml | grep -oP '(?<=<version>).*?(?=</version>)'
+        _log "Run" "sudo systemctl start jenkins.service"
+        exit 1
+    fi
 }

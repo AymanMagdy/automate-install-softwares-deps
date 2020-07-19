@@ -2,7 +2,7 @@
 
 :'
     This file is to install and configure docker.
-    Install docker latest version with reference 
+    Install docker latest version with reference  https://runnable.com/docker/install-docker-on-linux
 '
 
 install_docker () {
@@ -14,7 +14,7 @@ install_docker () {
    docker --version >& /dev/null
    if [ $? -ge 1 ]; then 
         _log "Removing" "Docker" "If any deps installed."
-        apt-get remove docker docker-engine docker.io containerd runc
+        apt-get remove docker docker-engine docker.io containerd runc -y
         _log "Updating" "current system" 
         apt-get update -y
 
@@ -47,9 +47,11 @@ install_docker () {
 
         _log "Installed" "the docker group"
         docker --version
+        exit 0
     else 
         _warn "Docker is already installed."
         _log "Check up" "Docker" "Already installed."
         docker --version
+        exit 1
    fi
 }
