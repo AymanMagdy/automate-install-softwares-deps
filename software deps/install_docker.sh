@@ -12,7 +12,9 @@ install_docker () {
     _log "Sourced" "the needed files"
 
    docker --version >& /dev/null
-   if [ $? -ge 1 ]; then 
+   _is_docker_installed=$?
+
+   if [ $_is_docker_installed -ge 1 ]; then 
         _log "Removing" "Docker" "If any deps installed."
         apt-get remove docker docker-engine docker.io containerd runc -y
         _log "Updating" "current system" 

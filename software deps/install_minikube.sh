@@ -13,6 +13,7 @@ install_minikube () {
 
     minikube version >& /dev/null
     _is_minikube_installed=$?
+    
     if [ $_is_minikube_installed -ge 1 ]; then
         _log "Installing" "kubectl"
         cd $USERNAME
