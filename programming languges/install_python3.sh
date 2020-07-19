@@ -12,8 +12,9 @@ install_python () {
     _log "Sourced" "the needed files."
 
     python3 --version >& /dev/null
-    # Checking if python installed on the machine.
-    if [ $? -ge 1 ]; then
+    _is_python_installed=$?
+    
+    if [ $_is_python_installed -ge 1 ]; then
         _log "Installing" "deps"
         sudo apt install software-properties-common -y
         _log "Adding" "key to the local machine"
